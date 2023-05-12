@@ -23,12 +23,6 @@ public class Player : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     void FreezeRotation()
     {
         rigid.angularVelocity = Vector3.zero;
@@ -39,7 +33,6 @@ public class Player : MonoBehaviour
         FreezeRotation();
     }
 
-    // Update is called once per frame
     void Update()
     {
         GetInput();
@@ -54,38 +47,57 @@ public class Player : MonoBehaviour
         vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButton("Walk");
         jDown = Input.GetButtonDown("Jump");
+
+        // 이동 방향을 카메라가 바라보는 방향으로 조정합니다.
+        moveVec = (hAxis * Camera.main.transform.right + vAxis * Camera.main.transform.forward).normalized;
     }
 
     void Move()
     {
-        moveVec = new Vector3(hAxis, 0, vAxis).normalized;
+        if (moveVec != Vector3.zero)
+        {
+            if (wDown)
+                transform.position += moveVec * speed * 0.3f * Time.deltaTime;
+            else
+                transform.position += moveVec * speed * Time.deltaTime;
 
-        if (wDown)
-            transform.position += moveVec * speed * 0.3f * Time.deltaTime;
+            anim.SetBool("isRun", true);
+            anim.SetBool("isWalk", wDown);
+        }
         else
-            transform.position += moveVec * speed * Time.deltaTime;
-
-        anim.SetBool("isRun", moveVec != Vector3.zero);
-        anim.SetBool("isWalk", wDown);
+        {
+            anim.SetBool("isRun", false);
+            anim.SetBool("isWalk", false);
+        }
     }
 
     void Turn()
     {
-        transform.LookAt(transform.position + moveVec);
+        if (moveVec != Vector3.zero)
+        {
+            Vector3 lookDir = moveVec.normalized;
+            lookDir.y = 0; // y축 회전 방지
+
+            // 플레이어가 바라보는 방향으로부터 회전 각도를 구합니다.
+            Quaternion targetRotation = Quaternion.LookRotation(lookDir);
+
+            // 플레이어를 부드럽게 회전시킵니다.
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
     }
 
     void Jump()
     {
-        if(jDown && !isJump)
+        if (jDown && !isJump)
         {
             rigid.AddForce(Vector3.up * 5, ForceMode.Impulse);
             isJump = true;
         }
     }
 
-    void OncollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Floor")
+        if (collision.gameObject.tag == "Floor")
         {
             isJump = false;
         }
