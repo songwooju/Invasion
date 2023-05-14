@@ -19,6 +19,11 @@ public class Enemy : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody>();
 
+        if (GameManager.instance != null && GameManager.instance.player != null)
+        {
+            target = GameManager.instance.player.transform;
+        }
+
         Invoke("ChaseStart", 1);
     }
 
@@ -44,7 +49,6 @@ public class Enemy : MonoBehaviour
         if (isChase)
         {
             nav.SetDestination(target.position);
-
         }
     }
 }
