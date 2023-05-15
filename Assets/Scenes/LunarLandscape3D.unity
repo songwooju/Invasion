@@ -5721,6 +5721,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec82994e625ac114da470f2fbceda6b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameTime: 0
+  maxGameTime: 20
   pool: {fileID: 1939231664}
   player: {fileID: 902475673}
 --- !u!4 &2136344553
@@ -5802,6 +5804,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 696699445692684301, guid: 9397babbd77df6445b7ad98d04097c64, type: 3}
+      propertyPath: m_Speed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7613692282305419719, guid: 9397babbd77df6445b7ad98d04097c64, type: 3}
       propertyPath: m_Name
       value: Enemy 2
