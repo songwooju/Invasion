@@ -7,6 +7,10 @@ public class Enemy : MonoBehaviour
 {
     public Transform target;
     public bool isChase;
+    public float health;
+    public float maxHealth;
+
+    bool isLive = true;
 
     Rigidbody rigid;
     Animator anim;
