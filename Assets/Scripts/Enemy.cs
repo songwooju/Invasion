@@ -6,11 +6,12 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public Transform target;
+    public RuntimeAnimatorController[] animCon;
     public bool isChase;
     public float health;
     public float maxHealth;
 
-    bool isLive = true;
+    bool isLive;
 
     Rigidbody rigid;
     Animator anim;
@@ -53,6 +54,38 @@ public class Enemy : MonoBehaviour
         if (isChase)
         {
             nav.SetDestination(target.position);
+        }
+    }
+
+    void OnEnable()
+    {
+        isLive = true;
+        health = maxHealth;
+
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        isLive = false;
+
+        Destroy(gameObject);
+    }
+
+    private void OncollisionEnter(Collision collision)
+    {
+        if(collision.collider.tag == "Bullet")
+        {
+            Destroy(collision.gameObject);
         }
     }
 }

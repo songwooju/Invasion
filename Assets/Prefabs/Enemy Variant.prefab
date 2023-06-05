@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1325898780916914, guid: feefc8bdbd5cd3340a37ddc39f079c5a, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4652387889504090, guid: feefc8bdbd5cd3340a37ddc39f079c5a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -121,7 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4809328613403866717, guid: 08c88ca1b8521584aad713a3f42ea700, type: 3}
+  animCon: []
   isChase: 1
+  health: 100
+  maxHealth: 100
 --- !u!195 &1923879037
 NavMeshAgent:
   m_ObjectHideFlags: 0

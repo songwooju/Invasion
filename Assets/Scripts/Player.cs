@@ -48,7 +48,6 @@ public class Player : MonoBehaviour
         wDown = Input.GetButton("Walk");
         jDown = Input.GetButtonDown("Jump");
 
-        // 이동 방향을 카메라가 바라보는 방향으로 조정합니다.
         moveVec = (hAxis * Camera.main.transform.right + vAxis * Camera.main.transform.forward).normalized;
     }
 
@@ -76,12 +75,10 @@ public class Player : MonoBehaviour
         if (moveVec != Vector3.zero)
         {
             Vector3 lookDir = moveVec.normalized;
-            lookDir.y = 0; // y축 회전 방지
+            lookDir.y = 0;
 
-            // 플레이어가 바라보는 방향으로부터 회전 각도를 구합니다.
             Quaternion targetRotation = Quaternion.LookRotation(lookDir);
 
-            // 플레이어를 부드럽게 회전시킵니다.
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         }
     }

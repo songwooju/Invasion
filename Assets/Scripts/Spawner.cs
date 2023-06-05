@@ -14,10 +14,11 @@ public class Spawner : MonoBehaviour
     {
         spawnPoint = GetComponentsInChildren<Transform>();
     }
+
     void Update()
     {
         timer += Time.deltaTime;
-        level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 10f));
+        level = Mathf.FloorToInt(GameManager.instance.gameTime / 10.0f);
 
         if(timer > (level == 0 ? 0.5f : 1f))
         {
