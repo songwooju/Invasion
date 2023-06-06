@@ -22,9 +22,9 @@ public class PoolManager : MonoBehaviour
     {
         GameObject select = null;
 
-        foreach(GameObject item in pools[index])
+        foreach (GameObject item in pools[index])
         {
-            if(!item.activeSelf)
+            if (item != null && !item.activeSelf)
             {
                 select = item;
                 select.SetActive(true);
@@ -32,7 +32,7 @@ public class PoolManager : MonoBehaviour
             }
         }
 
-        if(!select)
+        if (select == null)
         {
             select = Instantiate(prefabs[index], transform);
             pools[index].Add(select);

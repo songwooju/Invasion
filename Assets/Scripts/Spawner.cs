@@ -18,9 +18,9 @@ public class Spawner : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        level = Mathf.FloorToInt(GameManager.instance.gameTime / 10.0f);
+        level = Mathf.FloorToInt(GameManager.instance.gameTime / 15.0f);
 
-        if(timer > (level == 0 ? 0.5f : 1f))
+        if (timer > (level == 0 ? 0.5f : 1f))
         {
             timer = 0;
             Spawn();
@@ -30,6 +30,13 @@ public class Spawner : MonoBehaviour
     void Spawn()
     {
         GameObject enemy = GameManager.instance.pool.Get(level);
-        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
+        if (enemy != null)
+        {
+            Transform spawnTransform = spawnPoint[Random.Range(1, spawnPoint.Length)];
+            if (spawnTransform != null)
+            {
+                enemy.transform.position = spawnTransform.position;
+            }
+        }
     }
 }

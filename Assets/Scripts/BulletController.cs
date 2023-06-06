@@ -6,15 +6,15 @@ public class BulletController : MonoBehaviour
 {
     public float damage = 10.0f;
     public float speed = 1000.0f;
-    // Start is called before the first frame update
+
     void Start()
     {
         GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
+        Destroy(gameObject, 1.0f); // 2초 후에 자신을 파괴
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

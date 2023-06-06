@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     Animator anim;
     NavMeshAgent nav;
 
-
     void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
@@ -61,11 +60,13 @@ public class Enemy : MonoBehaviour
     {
         isLive = true;
         health = maxHealth;
-
     }
 
     public void TakeDamage(int damage)
     {
+        if (!isLive)
+            return; // Don't take damage if already dead
+
         health -= damage;
 
         if (health <= 0)
@@ -77,15 +78,18 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         isLive = false;
+        // Perform death animation or other actions
 
+        GameManager.instance.IncreaseKillCount(); // Increase kill count
         Destroy(gameObject);
     }
 
-    private void OncollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.collider.tag == "Bullet")
+        if (other.CompareTag("Bullet"))
         {
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
+            TakeDamage(100);
         }
     }
 }
